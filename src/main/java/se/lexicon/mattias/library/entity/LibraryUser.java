@@ -1,14 +1,23 @@
-package se.lexicon.mattias.library.model;
+package se.lexicon.mattias.library.entity;
 
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
 public class LibraryUser {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
+
     private LocalDate regDate;
     private String name;
+
+    @Column(unique = true,name = "email")
     private String email;
+    private BigDecimal dept;
 
     /** Constructors **/
     public LibraryUser() {
@@ -18,6 +27,7 @@ public class LibraryUser {
         this.regDate = regDate;
         this.name = name;
         this.email = email;
+        this.dept = new BigDecimal(0);
     }
 
     public LibraryUser(Integer userId, LocalDate regDate, String name, String email) {
@@ -25,6 +35,7 @@ public class LibraryUser {
         this.regDate = regDate;
         this.name = name;
         this.email = email;
+        this.dept = new BigDecimal(0);
     }
 
     /** Getters and setters **/
@@ -57,6 +68,14 @@ public class LibraryUser {
         this.email = email;
     }
 
+    public BigDecimal getDept() {
+        return dept;
+    }
+
+    public void setDept(BigDecimal dept) {
+        this.dept = dept;
+    }
+
     /** Hash & Equals **/
 
     @Override
@@ -79,6 +98,6 @@ public class LibraryUser {
 
     @Override
     public String toString() {
-        return "User: "+userId+" | Name: "+name+" | Email: "+email+" | Reg: "+regDate;
+        return "User: "+userId+" | Name: "+name+" | Email: "+email+" | Reg: "+regDate+" | Dept: "+dept;
     }
 }

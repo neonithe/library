@@ -1,13 +1,12 @@
-package se.lexicon.mattias.library.model;
+package se.lexicon.mattias.library.entity;
 
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Transactional
@@ -31,15 +30,17 @@ public class LibraryUserTest {
     public void successCreated() {
 
         LocalDate testDate = userTest.getRegDate();
+        BigDecimal setFine = new BigDecimal(100);
+        userTest.setDept(new BigDecimal(100));
 
         assertNotNull(userTest);
         assertTrue(userTest.getUserId() == 1);
         assertEquals("Name1", userTest.getName());
         assertEquals(testDate, userTest.getRegDate());
         assertEquals("test@test1.com", userTest.getEmail());
+        assertEquals(setFine, userTest.getDept());
 
     }
-
 
     @Test
     void testEquals() {

@@ -1,11 +1,19 @@
-package se.lexicon.mattias.library.model;
+package se.lexicon.mattias.library.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bookId;
+
     private String title;
     private boolean available;
     private boolean reserved;
@@ -126,5 +134,9 @@ public class Book {
                 ", description='" + description + '\'' +
                 '}';
     }
+
+
+    /** Methods **/
+
 
 }
