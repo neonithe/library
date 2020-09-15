@@ -2,7 +2,6 @@ package se.lexicon.mattias.library.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import se.lexicon.mattias.library.entity.Book;
-import se.lexicon.mattias.library.entity.LibraryUser;
 
 import java.util.List;
 

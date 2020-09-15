@@ -2,16 +2,12 @@ package se.lexicon.mattias.library.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 public class Loan {
 
-  //  @Id
-  //  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loan_generator")
-  //  @SequenceGenerator(name="loan_generator", sequenceName = "loan_seq", allocationSize=64)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long loanId;
@@ -116,7 +112,7 @@ public class Loan {
             "\n | Book: "+book;
   }
 
-  /** Methods **/  // ID | LOANTAKER | BOOK | LOANDATE | AVSLUTAD
+  /** Methods **/
 
   public int days() {
     LocalDate loanDate = getLoanDate();

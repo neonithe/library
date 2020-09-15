@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface LibraryUserDAO extends JpaRepository<LibraryUser, Integer> {
 
-  //  List<LibraryUser> findByEmail(String email);
     Optional<LibraryUser> findByEmail(String email);
 
 }

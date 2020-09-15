@@ -1,13 +1,9 @@
 package se.lexicon.mattias.library.entity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import se.lexicon.mattias.library.data.LibraryUserDAO;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Optional;
 
 @Entity
 public class LibraryUser {

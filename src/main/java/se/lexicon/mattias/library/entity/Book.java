@@ -128,7 +128,4 @@ public class Book {
                 " | Loan days: "+maxLoanDays+" | Fine: "+finePerDay+" | Desc:"+description;
     }
 
-    /** Methods **/
-
-
 }
