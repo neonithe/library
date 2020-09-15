@@ -124,17 +124,9 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "bookId=" + bookId +
-                ", title='" + title + '\'' +
-                ", available=" + available +
-                ", reserved=" + reserved +
-                ", maxLoanDays=" + maxLoanDays +
-                ", finePerDay=" + finePerDay +
-                ", description='" + description + '\'' +
-                '}';
+        return "ID: "+bookId+" | Title: "+title+" | Available: "+available+" | Reserved: "+reserved+
+                " | Loan days: "+maxLoanDays+" | Fine: "+finePerDay+" | Desc:"+description;
     }
-
 
     /** Methods **/
 

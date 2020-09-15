@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import se.lexicon.mattias.library.data.BookDAO;
+import se.lexicon.mattias.library.data.LibraryUserDAO;
 import se.lexicon.mattias.library.entity.Book;
 import se.lexicon.mattias.library.entity.LibraryUser;
 import se.lexicon.mattias.library.entity.Loan;
@@ -12,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
+import java.util.List;
 
 @SpringBootApplication
 public class LibraryApplication implements CommandLineRunner {
@@ -19,6 +22,12 @@ public class LibraryApplication implements CommandLineRunner {
 	Book newBook;
 	LibraryUser user;
 	Loan loan;
+
+	@Autowired
+	LibraryUserDAO userDAO;
+
+	@Autowired
+	BookDAO bookDAO;
 
 
 	public static void main(String[] args) {
@@ -34,8 +43,8 @@ public class LibraryApplication implements CommandLineRunner {
 		BigDecimal fine = new BigDecimal(10);
 
 		// ID | REGDATE | NAME | EMAIL | DEPT
-		LibraryUser user1 = new LibraryUser(1, LocalDate.parse("2020-01-01"), "Name1", "name@name.com");
-		LibraryUser user2 = new LibraryUser(2, LocalDate.parse("2020-01-01"), "Name2", "name@name.com");
+		LibraryUser user1 = new LibraryUser(1, LocalDate.parse("2020-01-01"), "Name1", "name@name1.com");
+		LibraryUser user2 = new LibraryUser(2, LocalDate.parse("2020-01-01"), "Name2", "name@name2.com");
 
 		// ID | TITLE | AVALIBLE | RESERVED | MAXLOANDAYS | FINEPERDAY | DESCRIPTION
 		Book book1 = new Book(1,"Title1", true, 		false, 	20, fine, "Good book 1");
@@ -45,14 +54,17 @@ public class LibraryApplication implements CommandLineRunner {
 		// ID | LOANTAKER | BOOK | LOANDATE | AVSLUTAD
 		Loan loan1 = new Loan(1L, user1, book1, LocalDate.parse("2020-01-01"), false);
 
-		BigDecimal fine2 = new BigDecimal(10);
-		int daysOverDue = -7;
-		BigDecimal amount = new BigDecimal(0); //fine2.multiply(new BigDecimal(daysOverDue));
+		userDAO.save(new LibraryUser(2, LocalDate.parse("2020-01-01"), "Name2", "name@name2.com"));
+		bookDAO.save(new Book(1,"Title1", true, 		false, 	20, fine, "Good book 1"));
+		bookDAO.save(new Book(2,"Title2", false, 	true, 	20, fine, "Good book 2"));
 
-		System.out.println(loan().getFine());
-		System.out.println(loan().isOverdue());
-		System.out.println(loan().extendLoan(book().getMaxLoanDays()));
+		List<Book> bookList0 = bookDAO.findByAvailable(false);
+		List<Book> bookList1 = bookDAO.findByReserved(false);
+		List<Book> bookList2 = bookDAO.findByTitleIgnoreCase("title1");
 
+		bookList0.forEach(System.out::println);
+		bookList1.forEach(System.out::println);
+		bookList2.forEach(System.out::println);
 	}
 
 	public LibraryUser user() {
