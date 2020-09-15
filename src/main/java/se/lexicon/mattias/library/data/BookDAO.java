@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface BookDAO extends JpaRepository<Book, Integer> {
 
-    List<Book> findByReserved(boolean reserved);
-    List<Book> findByAvailable(boolean available);
+    List<Book> findByReserved(boolean status);
+    List<Book> findByAvailable(boolean status);
     List<Book> findByTitleIgnoreCase(String title);
 
 }

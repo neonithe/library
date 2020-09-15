@@ -111,13 +111,9 @@ public class Loan {
 
   @Override
   public String toString() {
-    return "Loan{" +
-            "loanId=" + loanId +
-            ", loanTaker=" + loanTaker +
-            ", book=" + book +
-            ", loanDate=" + loanDate +
-            ", terminated=" + avslutad +
-            '}';
+    return "Loan ID: "+loanId+" | LoneDate: "+loanDate+" | Terminated: "+avslutad+
+            "\n | Lonetaker: "+loanTaker+
+            "\n | Book: "+book;
   }
 
   /** Methods **/  // ID | LOANTAKER | BOOK | LOANDATE | AVSLUTAD
