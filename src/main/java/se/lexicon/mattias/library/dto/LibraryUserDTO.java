@@ -17,12 +17,12 @@ public class LibraryUserDTO {
     public LibraryUserDTO() {
     }
 
-    public LibraryUserDTO(Integer userId, LocalDate regDate, String name, String email, BigDecimal dept) {
+    public LibraryUserDTO(Integer userId, LocalDate regDate, String name, String email) {
         this.userId = userId;
         this.regDate = regDate;
         this.name = name;
         this.email = email;
-        this.dept = dept;
+        this.dept = new BigDecimal(0);
     }
 
     /** Getters and setters **/
