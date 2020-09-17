@@ -50,7 +50,7 @@ public class MyConversionService {
 
     /** Optional to object LibraryUser ID **/
 
-    public LibraryUser opToObjId(Integer id) {
+    public LibraryUser opToObjUserId(Integer id) {
 
        Optional<LibraryUser> userList = userDAO.findById(id);
        LibraryUser user = null;
@@ -74,6 +74,19 @@ public class MyConversionService {
         }
 
         return user;
+    }
+
+    /** Convert USER to DTO list **/
+
+    public List<LibraryUserDTO> convertUserList(List<LibraryUser> userList) {
+
+        List<LibraryUserDTO> dtoList = new ArrayList<>();
+
+        for ( LibraryUser user : userList ){
+            dtoList.add(convertUserToDto(user));
+        }
+
+        return dtoList;
     }
 
     /** Conversions for Book | ID | TITLE | AVALIBLE | RESERVED | MAXLOANDAYS | FINEPERDAY | DESCRIPTION **************/

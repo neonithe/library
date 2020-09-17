@@ -39,7 +39,7 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public List<LoanDTO> findByUserId(Integer userId) {
-        LibraryUser user = myConversionService.opToObjId(userId);
+        LibraryUser user = myConversionService.opToObjUserId(userId);
 
         List<LoanDTO> resultList = myConversionService.convertLoanList(loanDAO.findByLoanTaker(user));
 

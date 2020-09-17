@@ -8,7 +8,6 @@ import se.lexicon.mattias.library.entity.LibraryUser;
 import se.lexicon.mattias.library.service.LibraryUserService;
 import se.lexicon.mattias.library.service.MyConversionService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,32 +25,21 @@ public class LibraryUserServiceImpl implements LibraryUserService {
     @Override
     public LibraryUserDTO findById(Integer id) {
 
-        LibraryUser user = myConversionService.opToObjId(id);
-
-        return myConversionService.convertUserToDto(user);
+        return myConversionService.convertUserToDto(myConversionService.opToObjUserId(id));
     }
 
     @Override
     public LibraryUserDTO findByEmail(String email) {
 
-        LibraryUser user = myConversionService.opToObjEmail(email);
-
-        return myConversionService.convertUserToDto(user);
+        return myConversionService.convertUserToDto(myConversionService.opToObjEmail(email));
     }
 
     @Override
     public List<LibraryUserDTO> findAll() {
 
-        List<LibraryUser> userList = userDAO.findAll();
-        List<LibraryUserDTO> dtoList = new ArrayList<>();
-
-        for ( LibraryUser user : userList ){
-            dtoList.add(myConversionService.convertUserToDto(user));
-        }
-
-        return dtoList;
+        return myConversionService.convertUserList(userDAO.findAll());
     }
-   // ID | REGDATE | NAME | EMAIL | DEPT
+
     @Override
     public LibraryUserDTO create(LibraryUserDTO user) {
 
@@ -75,6 +63,7 @@ public class LibraryUserServiceImpl implements LibraryUserService {
         updateUser.setName(user.getName());
         updateUser.setEmail(user.getEmail());
         updateUser.setDept(user.getDept());
+
         // Convert from DTO to user and save, then return DTO
         userDAO.save(myConversionService.convertDtoToUser(updateUser));
 
@@ -85,7 +74,7 @@ public class LibraryUserServiceImpl implements LibraryUserService {
     public boolean delete(Integer id) {
 
         if ( userDAO.existsById(id) ) {
-            LibraryUser user = myConversionService.opToObjId(id);
+            LibraryUser user = myConversionService.opToObjUserId(id);
             userDAO.delete(user);
             return true;
         } else {
