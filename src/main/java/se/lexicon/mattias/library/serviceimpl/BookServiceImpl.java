@@ -1,15 +1,17 @@
-package se.lexicon.mattias.library.service;
+package se.lexicon.mattias.library.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.lexicon.mattias.library.data.BookDAO;
 import se.lexicon.mattias.library.dto.BookDTO;
 import se.lexicon.mattias.library.entity.Book;
+import se.lexicon.mattias.library.service.BookService;
+import se.lexicon.mattias.library.service.MyConversionService;
 
 import java.util.List;
 
 @Service
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
 
     private BookDAO bookDAO;
     private MyConversionService myConversionService;
@@ -23,42 +25,31 @@ public class BookServiceImpl implements BookService{
     @Override
     public List<BookDTO> findByReserved(boolean reserved) {
 
-        List<BookDTO> resultList = myConversionService.convertBookList( bookDAO.findByReserved(reserved) );
-
-        return resultList;
+        return myConversionService.convertBookList( bookDAO.findByReserved(reserved) );
     }
 
     @Override
     public List<BookDTO> findByAvailable(boolean available) {
 
-        List<BookDTO> resultList = myConversionService.convertBookList( bookDAO.findByAvailable(available) );
-
-        return resultList;
+        return myConversionService.convertBookList( bookDAO.findByAvailable(available) );
     }
 
     @Override
     public List<BookDTO> findByTitle(String title) {
 
-        List<BookDTO> resultList = myConversionService.convertBookList( bookDAO.findByTitleIgnoreCase(title) );
-
-        return resultList;
+        return myConversionService.convertBookList( bookDAO.findByTitleIgnoreCase(title) );
     }
 
     @Override
     public List<BookDTO> findAll() {
 
-        List<BookDTO> resultList = myConversionService.convertBookList( bookDAO.findAll() );
-
-        return resultList;
+        return myConversionService.convertBookList( bookDAO.findAll() );
     }
 
     @Override
     public BookDTO findById(Integer id) {
 
-        BookDTO dto = myConversionService.convertBookToDto(
-                      myConversionService.opToObjBookId(id) );
-
-        return dto;
+        return myConversionService.convertBookToDto( myConversionService.opToObjBookId(id) );
     }
 
     @Override

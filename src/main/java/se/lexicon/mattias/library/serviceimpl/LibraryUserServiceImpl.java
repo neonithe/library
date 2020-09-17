@@ -1,22 +1,24 @@
-package se.lexicon.mattias.library.service;
+package se.lexicon.mattias.library.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.lexicon.mattias.library.data.LibraryUserDAO;
 import se.lexicon.mattias.library.dto.LibraryUserDTO;
 import se.lexicon.mattias.library.entity.LibraryUser;
+import se.lexicon.mattias.library.service.LibraryUserService;
+import se.lexicon.mattias.library.service.MyConversionService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LibraryUserImpl implements LibraryUserService{
+public class LibraryUserServiceImpl implements LibraryUserService {
 
     private LibraryUserDAO userDAO;
     private MyConversionService myConversionService;
 
     @Autowired
-    public LibraryUserImpl(LibraryUserDAO userDAO, MyConversionService myConversionService) {
+    public LibraryUserServiceImpl(LibraryUserDAO userDAO, MyConversionService myConversionService) {
         this.userDAO = userDAO;
         this.myConversionService = myConversionService;
     }

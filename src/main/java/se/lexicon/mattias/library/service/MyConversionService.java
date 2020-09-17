@@ -7,8 +7,10 @@ import se.lexicon.mattias.library.data.LibraryUserDAO;
 import se.lexicon.mattias.library.data.LoanDAO;
 import se.lexicon.mattias.library.dto.BookDTO;
 import se.lexicon.mattias.library.dto.LibraryUserDTO;
+import se.lexicon.mattias.library.dto.LoanDTO;
 import se.lexicon.mattias.library.entity.Book;
 import se.lexicon.mattias.library.entity.LibraryUser;
+import se.lexicon.mattias.library.entity.Loan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +122,49 @@ public class MyConversionService {
         return dtoList;
     }
 
+    /** Conversions for Loan | ID | LOANTAKER | BOOK | LOANDATE | AVSLUTAD ********************************************/
+
+    public Loan convertDtoToLoan(LoanDTO loan) {
+
+        Loan newLoan =
+                new Loan(loan.getLoanId(),loan.getLoanTaker(),loan.getBook(),loan.getLoanDate(),loan.isAvslutad());
+
+        return newLoan;
+    }
+
+    public LoanDTO convertLoanToDto(Loan loan) {
+
+        LoanDTO dto = new LoanDTO(loan.getLoanId(),loan.getLoanTaker(),loan.getBook(),loan.getLoanDate(),loan.isAvslutad());
+
+        return dto;
+    }
+
+    /** Optional to object Loan ID **/
+
+    public Loan opToObjLoanId(Long id) {
+
+        Optional<Loan> loanList = loanDAO.findById(id);
+        Loan loan = null;
+
+        if ( loanList.isPresent() ) {
+            loan = loanList.get();
+        }
+
+        return loan;
+    }
+
+    /** Convert LOAN to DTO list **/
+
+    public List<LoanDTO> convertLoanList(List<Loan> loanList) {
+
+        List<LoanDTO> dtoList = new ArrayList<>();
+
+        for ( Loan loan : loanList ){
+            dtoList.add(convertLoanToDto(loan));
+        }
+
+        return dtoList;
+    }
 
 
 }
