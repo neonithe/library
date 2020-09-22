@@ -10,6 +10,7 @@ import se.lexicon.mattias.library.data.LoanDAO;
 import se.lexicon.mattias.library.entity.Book;
 import se.lexicon.mattias.library.entity.LibraryUser;
 import se.lexicon.mattias.library.entity.Loan;
+import se.lexicon.mattias.library.service.LibraryUserService;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -32,6 +33,8 @@ public class LibraryApplication implements CommandLineRunner {
 
 	@Autowired
 	LoanDAO loanDAO;
+
+	LibraryUserService userService;
 
 
 	public static void main(String[] args) {
@@ -77,8 +80,6 @@ public class LibraryApplication implements CommandLineRunner {
 
 		/*************************************/
 
-
-
 	//	List<Loan> loanList0 = loanDAO.findByLoanTaker(user1);
 	//	List<Loan> loanList1 = loanDAO.findByBook(book2);
 	    List<Loan> loanList2 = loanDAO.findByAvslutad(false);
@@ -88,6 +89,7 @@ public class LibraryApplication implements CommandLineRunner {
 		loanList2.forEach(System.out::println);
 
 		System.out.println(loanList2.size());
+
 
 	}
 

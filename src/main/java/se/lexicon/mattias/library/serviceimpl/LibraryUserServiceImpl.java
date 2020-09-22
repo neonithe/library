@@ -5,10 +5,12 @@ import org.springframework.stereotype.Service;
 import se.lexicon.mattias.library.data.LibraryUserDAO;
 import se.lexicon.mattias.library.dto.LibraryUserDTO;
 import se.lexicon.mattias.library.entity.LibraryUser;
+import se.lexicon.mattias.library.exception.ResourceNotFoundException;
 import se.lexicon.mattias.library.service.LibraryUserService;
 import se.lexicon.mattias.library.service.MyConversionService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LibraryUserServiceImpl implements LibraryUserService {

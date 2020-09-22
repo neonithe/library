@@ -18,6 +18,15 @@ public class BookDTO {
     public BookDTO() {
     }
 
+    public BookDTO(String title, boolean available, boolean reserved, int maxLoanDays, BigDecimal finePerDay, String description) {
+        this.title = title;
+        this.available = available;
+        this.reserved = reserved;
+        this.maxLoanDays = maxLoanDays;
+        this.finePerDay = finePerDay;
+        this.description = description;
+    }
+
     public BookDTO(Integer bookId, String title, boolean available, boolean reserved, int maxLoanDays, BigDecimal finePerDay, String description) {
         this.bookId = bookId;
         this.title = title;

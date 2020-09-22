@@ -17,6 +17,13 @@ public class LibraryUserDTO {
     public LibraryUserDTO() {
     }
 
+    public LibraryUserDTO(LocalDate regDate, String name, String email, BigDecimal dept) {
+        this.regDate = regDate;
+        this.name = name;
+        this.email = email;
+        this.dept = dept;
+    }
+
     public LibraryUserDTO(Integer userId, LocalDate regDate, String name, String email) {
         this.userId = userId;
         this.regDate = regDate;
