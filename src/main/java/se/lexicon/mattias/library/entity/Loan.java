@@ -12,10 +12,12 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long loanId;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
+            fetch = FetchType.EAGER)
     private LibraryUser loanTaker;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
+            fetch = FetchType.EAGER)
     private Book book;
 
     private LocalDate loanDate;
@@ -144,15 +146,11 @@ public class Loan {
 
   public boolean extendLoan(int days) {
 
-        if (isOverdue() == false) {
-
+        if ( !isOverdue() ) {
             setLoanDate(today);
             today.plusDays(days);
-
           return true;
-
        } else {
-
           return false;
     }
   }

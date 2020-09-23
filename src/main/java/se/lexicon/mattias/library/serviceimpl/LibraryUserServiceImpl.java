@@ -5,12 +5,10 @@ import org.springframework.stereotype.Service;
 import se.lexicon.mattias.library.data.LibraryUserDAO;
 import se.lexicon.mattias.library.dto.LibraryUserDTO;
 import se.lexicon.mattias.library.entity.LibraryUser;
-import se.lexicon.mattias.library.exception.ResourceNotFoundException;
 import se.lexicon.mattias.library.service.LibraryUserService;
 import se.lexicon.mattias.library.service.MyConversionService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LibraryUserServiceImpl implements LibraryUserService {
@@ -58,6 +56,10 @@ public class LibraryUserServiceImpl implements LibraryUserService {
 
     @Override
     public LibraryUserDTO update(LibraryUserDTO user) {
+
+        if( user.getUserId().equals(0L) && user.getUserId() == null ) {
+            throw new IllegalArgumentException("User does not exist");
+        }
 
         LibraryUserDTO updateUser = findById(user.getUserId());
 

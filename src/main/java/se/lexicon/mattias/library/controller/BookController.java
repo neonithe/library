@@ -26,7 +26,7 @@ public class BookController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Object> findReserved(
+    public ResponseEntity<Object> find(
             @RequestParam(value = "type", defaultValue = "all") String type,
             @RequestParam(value = "status", defaultValue = "all") String status,
             @RequestParam(value = "value", defaultValue = "all") String value)

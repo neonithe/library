@@ -1,6 +1,7 @@
 package se.lexicon.mattias.library.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import se.lexicon.mattias.library.data.BookDAO;
 import se.lexicon.mattias.library.data.LibraryUserDAO;
 import se.lexicon.mattias.library.data.LoanDAO;
@@ -13,6 +14,7 @@ import se.lexicon.mattias.library.service.MyConversionService;
 
 import java.util.List;
 
+@Service
 public class LoanServiceImpl implements LoanService {
 
     LibraryUserDAO userDAO;
@@ -65,16 +67,23 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public LoanDTO create(LoanDTO dto) {
+
         Loan newLoan =
-                new Loan(dto.getLoanId(),dto.getLoanTaker(),dto.getBook(),dto.getLoanDate(),dto.isAvslutad());
+                new Loan(null,null,dto.getLoanDate(),dto.isAvslutad());
 
-        loanDAO.save(newLoan);
+        newLoan = loanDAO.save(newLoan);
+        newLoan.setLoanTaker(myConversionService.opToObjUserId(dto.getLoanTaker().getUserId()));
+        newLoan.setBook(myConversionService.opToObjBookId(dto.getBook().getBookId()));
 
-        return myConversionService.convertLoanToDto(newLoan);
+        return myConversionService.convertLoanToDto(loanDAO.save(newLoan));
     }
 
     @Override
     public LoanDTO update(LoanDTO dto) {
+
+        if( dto.getLoanId().equals(0L) && dto.getLoanId() == null ) {
+            throw new IllegalArgumentException("Loan does not exist");
+        }
 
         LoanDTO updateLoan = findById(dto.getLoanId());
 

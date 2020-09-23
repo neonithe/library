@@ -67,6 +67,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDTO update(BookDTO book) {
 
+        if( book.getBookId().equals(0L) && book.getBookId() == null ) {
+            throw new IllegalArgumentException("Book does not exist");
+        }
+
         BookDTO updateBook = findById(book.getBookId());
 
         updateBook.setTitle(book.getTitle());

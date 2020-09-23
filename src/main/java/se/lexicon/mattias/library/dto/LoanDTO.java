@@ -18,6 +18,13 @@ public class LoanDTO {
     public LoanDTO() {
     }
 
+    public LoanDTO(LibraryUser loanTaker, Book book, LocalDate loanDate, boolean avslutad) {
+        this.loanTaker = loanTaker;
+        this.book = book;
+        this.loanDate = loanDate;
+        this.avslutad = avslutad;
+    }
+
     public LoanDTO(Long loanId, LibraryUser loanTaker, Book book, LocalDate loanDate, boolean avslutad) {
         this.loanId = loanId;
         this.loanTaker = loanTaker;
