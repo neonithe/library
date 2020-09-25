@@ -11,6 +11,9 @@ import se.lexicon.mattias.library.dto.LoanDTO;
 import se.lexicon.mattias.library.entity.Book;
 import se.lexicon.mattias.library.entity.LibraryUser;
 import se.lexicon.mattias.library.entity.Loan;
+import se.lexicon.mattias.library.exceptions.ResourceNotFoundException;
+
+import static se.lexicon.mattias.library.exceptions.ErrorMessage.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +22,9 @@ import java.util.Optional;
 @Service
 public class MyConversionService {
 
-    BookDAO bookDAO;
-    LibraryUserDAO userDAO;
-    LoanDAO loanDAO;
+    private BookDAO bookDAO;
+    private LibraryUserDAO userDAO;
+    private LoanDAO loanDAO;
 
     @Autowired
     public MyConversionService(BookDAO bookDAO, LibraryUserDAO userDAO, LoanDAO loanDAO) {
@@ -52,8 +55,10 @@ public class MyConversionService {
 
     public LibraryUser opToObjUserId(Integer id) {
 
+        LibraryUser user = userDAO.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException(ERROR_NOT_FOUND_ID + id +" ]"));
+
        Optional<LibraryUser> userList = userDAO.findById(id);
-       LibraryUser user = null;
 
         if ( userList.isPresent() ) {
                 user = userList.get();
@@ -66,8 +71,10 @@ public class MyConversionService {
 
     public LibraryUser opToObjEmail(String email) {
 
+        LibraryUser user = userDAO.findByEmail(email).orElseThrow(() ->
+                new ResourceNotFoundException(ERROR_NOT_FOUND_ID + email +" ]"));
+
         Optional<LibraryUser> userList = userDAO.findByEmail(email);
-        LibraryUser user = null;
 
         if ( userList.isPresent() ) {
             user = userList.get();
@@ -79,6 +86,10 @@ public class MyConversionService {
     /** Convert USER to DTO list **/
 
     public List<LibraryUserDTO> convertUserList(List<LibraryUser> userList) {
+
+        if ( userList.isEmpty() ) {
+            throw new ResourceNotFoundException(LIST_EMPTY);
+        }
 
         List<LibraryUserDTO> dtoList = new ArrayList<>();
 
@@ -112,8 +123,10 @@ public class MyConversionService {
 
     public Book opToObjBookId(Integer id) {
 
+        Book book = bookDAO.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException(ERROR_NOT_FOUND_ID + id +" ]"));
+
         Optional<Book> bookList = bookDAO.findById(id);
-        Book book = null;
 
         if ( bookList.isPresent() ) {
             book = bookList.get();
@@ -125,6 +138,10 @@ public class MyConversionService {
     /** Convert BOOK to DTO list **/
 
     public List<BookDTO> convertBookList(List<Book> bookList) {
+
+        if ( bookList.isEmpty() ) {
+            throw new ResourceNotFoundException(LIST_EMPTY);
+        }
 
         List<BookDTO> dtoList = new ArrayList<>();
 
@@ -140,14 +157,14 @@ public class MyConversionService {
     public Loan convertDtoToLoan(LoanDTO loan) {
 
         Loan newLoan =
-                new Loan(loan.getLoanId(),loan.getLoanTaker(),loan.getBook(),loan.getLoanDate(),loan.isAvslutad());
+                new Loan(loan.getLoanId(),opToObjUserId(loan.getUserId()),opToObjBookId(loan.getBookId()),loan.getLoanDate(),loan.isAvslutad());
 
         return newLoan;
     }
 
     public LoanDTO convertLoanToDto(Loan loan) {
 
-        LoanDTO dto = new LoanDTO(loan.getLoanId(),loan.getLoanTaker(),loan.getBook(),loan.getLoanDate(),loan.isAvslutad());
+        LoanDTO dto = new LoanDTO(loan.getLoanId(),loan.getLoanTaker().getUserId(),loan.getBook().getBookId(),loan.getLoanDate(),loan.isAvslutad());
 
         return dto;
     }
@@ -156,8 +173,10 @@ public class MyConversionService {
 
     public Loan opToObjLoanId(Long id) {
 
+        Loan loan = loanDAO.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException(ERROR_NOT_FOUND_ID + id +" ]"));
+
         Optional<Loan> loanList = loanDAO.findById(id);
-        Loan loan = null;
 
         if ( loanList.isPresent() ) {
             loan = loanList.get();
@@ -169,6 +188,10 @@ public class MyConversionService {
     /** Convert LOAN to DTO list **/
 
     public List<LoanDTO> convertLoanList(List<Loan> loanList) {
+
+        if ( loanList.isEmpty() ) {
+            throw new ResourceNotFoundException(LIST_EMPTY);
+        }
 
         List<LoanDTO> dtoList = new ArrayList<>();
 

@@ -9,10 +9,14 @@ import se.lexicon.mattias.library.dto.LoanDTO;
 import se.lexicon.mattias.library.entity.Book;
 import se.lexicon.mattias.library.entity.LibraryUser;
 import se.lexicon.mattias.library.entity.Loan;
+import se.lexicon.mattias.library.exceptions.ResourceNotFoundException;
 import se.lexicon.mattias.library.service.LoanService;
 import se.lexicon.mattias.library.service.MyConversionService;
 
 import java.util.List;
+
+import static se.lexicon.mattias.library.exceptions.ErrorMessage.ERROR_NOT_FOUND_ID;
+import static se.lexicon.mattias.library.exceptions.ErrorMessage.ERROR_NO_ID;
 
 @Service
 public class LoanServiceImpl implements LoanService {
@@ -62,18 +66,23 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public LoanDTO findById(Long loanId) {
-        return myConversionService.convertLoanToDto( myConversionService.opToObjLoanId(loanId) );
+
+        return myConversionService.convertLoanToDto(myConversionService.opToObjLoanId(loanId));
     }
 
     @Override
     public LoanDTO create(LoanDTO dto) {
 
+        if ( dto.getLoanId() != null ) {
+            throw new IllegalArgumentException(ERROR_NO_ID);
+        }
+
         Loan newLoan =
                 new Loan(null,null,dto.getLoanDate(),dto.isAvslutad());
 
         newLoan = loanDAO.save(newLoan);
-        newLoan.setLoanTaker(myConversionService.opToObjUserId(dto.getLoanTaker().getUserId()));
-        newLoan.setBook(myConversionService.opToObjBookId(dto.getBook().getBookId()));
+        newLoan.setLoanTaker(myConversionService.opToObjUserId(dto.getUserId()));
+        newLoan.setBook(myConversionService.opToObjBookId(dto.getBookId()));
 
         return myConversionService.convertLoanToDto(loanDAO.save(newLoan));
     }
@@ -81,14 +90,10 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public LoanDTO update(LoanDTO dto) {
 
-        if( dto.getLoanId().equals(0L) && dto.getLoanId() == null ) {
-            throw new IllegalArgumentException("Loan does not exist");
-        }
-
         LoanDTO updateLoan = findById(dto.getLoanId());
 
-        updateLoan.setLoanTaker(dto.getLoanTaker());
-        updateLoan.setBook(dto.getBook());
+        updateLoan.setUserId(dto.getUserId());
+        updateLoan.setBookId(dto.getBookId());
         updateLoan.setLoanDate(dto.getLoanDate());
         updateLoan.setAvslutad(dto.isAvslutad());
 
@@ -99,6 +104,8 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public boolean delete(Long loanId) {
+
+        loanDAO.findById(loanId).orElseThrow(()-> new ResourceNotFoundException(ERROR_NOT_FOUND_ID));
 
         if ( loanDAO.existsById(loanId) ) {
             Loan loan = myConversionService.opToObjLoanId(loanId);

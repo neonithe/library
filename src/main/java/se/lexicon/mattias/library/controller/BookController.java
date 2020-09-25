@@ -21,15 +21,15 @@ public class BookController {
     }
 
     @GetMapping("/findid/{bookId}")
-    public ResponseEntity<BookDTO> findById(@Valid @PathVariable Integer bookId) {
+    public ResponseEntity<BookDTO> findById(@PathVariable Integer bookId) {
         return ResponseEntity.ok(bookService.findById(bookId));
     }
 
     @GetMapping("/find")
     public ResponseEntity<Object> find(
             @RequestParam(value = "type", defaultValue = "all") String type,
-            @RequestParam(value = "status", defaultValue = "all") String status,
-            @RequestParam(value = "value", defaultValue = "all") String value)
+            @RequestParam(value = "value", defaultValue = "all") String value,
+            @RequestParam(value = "status", defaultValue = "all") String status)
     {
 
         switch ( type ) {
@@ -66,6 +66,11 @@ public class BookController {
         return ResponseEntity.ok(bookService.update(bookDTO));
     }
 
+    @DeleteMapping("/delete/{bookId}")
+    public ResponseEntity<Boolean> delete(@PathVariable Integer bookId) {
+
+        return ResponseEntity.ok(bookService.delete(bookId));
+    }
 
 
 }

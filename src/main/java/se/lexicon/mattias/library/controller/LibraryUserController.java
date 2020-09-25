@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.lexicon.mattias.library.dto.LibraryUserDTO;
-import se.lexicon.mattias.library.exception.ResourceNotFoundException;
+//import se.lexicon.mattias.library.exception.ResourceNotFoundException;
 import se.lexicon.mattias.library.service.LibraryUserService;
 import se.lexicon.mattias.library.service.MyConversionService;
 
@@ -33,7 +33,7 @@ public class LibraryUserController {
     /** FIND USER ID, EMAIL AND ALL ***********************************************************************************/
 
     @GetMapping("/findid/{userId}")
-    public ResponseEntity<LibraryUserDTO> findById(@Valid @PathVariable Integer userId) throws ResourceNotFoundException {
+    public ResponseEntity<LibraryUserDTO> findById(@Valid @PathVariable Integer userId) {
 
         LibraryUserDTO userDTO = userService.findById(userId);
 

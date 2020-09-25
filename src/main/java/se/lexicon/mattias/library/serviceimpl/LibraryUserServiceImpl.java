@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import se.lexicon.mattias.library.data.LibraryUserDAO;
 import se.lexicon.mattias.library.dto.LibraryUserDTO;
 import se.lexicon.mattias.library.entity.LibraryUser;
+import se.lexicon.mattias.library.exceptions.ResourceNotFoundException;
 import se.lexicon.mattias.library.service.LibraryUserService;
 import se.lexicon.mattias.library.service.MyConversionService;
+
+import static se.lexicon.mattias.library.exceptions.ErrorMessage.*;
 
 import java.util.List;
 
@@ -43,6 +46,10 @@ public class LibraryUserServiceImpl implements LibraryUserService {
     @Override
     public LibraryUserDTO create(LibraryUserDTO user) {
 
+        if ( user.getUserId() != null ) {
+            throw new IllegalArgumentException(ERROR_NO_ID);
+        }
+
         // Create new user from userDTO
         LibraryUser newUser =
                 new LibraryUser(user.getRegDate(), user.getName(),user.getEmail());
@@ -56,10 +63,6 @@ public class LibraryUserServiceImpl implements LibraryUserService {
 
     @Override
     public LibraryUserDTO update(LibraryUserDTO user) {
-
-        if( user.getUserId().equals(0L) && user.getUserId() == null ) {
-            throw new IllegalArgumentException("User does not exist");
-        }
 
         LibraryUserDTO updateUser = findById(user.getUserId());
 
@@ -76,6 +79,8 @@ public class LibraryUserServiceImpl implements LibraryUserService {
 
     @Override
     public boolean delete(Integer id) {
+
+        userDAO.findById(id).orElseThrow(()-> new ResourceNotFoundException(ERROR_NOT_FOUND_ID));
 
         if ( userDAO.existsById(id) ) {
             LibraryUser user = myConversionService.opToObjUserId(id);

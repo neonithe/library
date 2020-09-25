@@ -7,19 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import se.lexicon.mattias.library.data.BookDAO;
 import se.lexicon.mattias.library.data.LibraryUserDAO;
 import se.lexicon.mattias.library.data.LoanDAO;
-import se.lexicon.mattias.library.dto.LoanDTO;
 import se.lexicon.mattias.library.entity.Book;
 import se.lexicon.mattias.library.entity.LibraryUser;
 import se.lexicon.mattias.library.entity.Loan;
-import se.lexicon.mattias.library.service.LibraryUserService;
 import se.lexicon.mattias.library.service.MyConversionService;
 import se.lexicon.mattias.library.serviceimpl.LoanServiceImpl;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
-import java.util.List;
 
 @SpringBootApplication
 public class LibraryApplication implements CommandLineRunner {
@@ -54,27 +49,22 @@ public class LibraryApplication implements CommandLineRunner {
 		// BOOK ID | TITLE | AVALIBLE | RESERVED | MAXLOANDAYS | FINEPERDAY | DESCRIPTION
 		// LOAN ID | LOANTAKER | BOOK | LOANDATE | AVSLUTAD
 
+		System.out.println("-[CREATE USERS]---------------------------------------------------------------------------");
 		userDAO.save(new LibraryUser(LocalDate.parse("2020-01-01"), "Martin", "martin@mail.com"));
 		userDAO.save(new LibraryUser(LocalDate.parse("2020-01-01"), "Mattias", "mattias@mail.com"));
 		userDAO.save(new LibraryUser(LocalDate.parse("2020-01-01"), "Sofia", "sofia@mail.com"));
 		userDAO.save(new LibraryUser(LocalDate.parse("2020-01-01"), "Hanna", "hanna@mail.com"));
-
+		System.out.println("-[CREATE BOOKS]---------------------------------------------------------------------------");
 		bookDAO.save(new Book("Title1", true, 	false, 	20, fine, "Good book 1"));
 		bookDAO.save(new Book("Title2", false, 	true, 	20, fine, "Good book 2"));
 		bookDAO.save(new Book("Title3", true, 	false, 	20, fine, "Good book 3"));
 		bookDAO.save(new Book("Title4", false, 	true, 	20, fine, "Good book 4"));
-
-		// Create loan
-		System.out.println("------------------------------------------------------------------------------------------");
+		System.out.println("-[CREATE LOANS]---------------------------------------------------------------------------");
 		create(new Loan(conversionService.opToObjUserId(1), conversionService.opToObjBookId(1),LocalDate.parse("2020-01-10"), false ));
 		create(new Loan(conversionService.opToObjUserId(1), conversionService.opToObjBookId(2),LocalDate.parse("2020-01-20"), true ));
 		create(new Loan(conversionService.opToObjUserId(2), conversionService.opToObjBookId(3),LocalDate.parse("2020-01-30"), false ));
 		System.out.println("------------------------------------------------------------------------------------------");
 
-		LibraryUser user = conversionService.opToObjUserId(1);
-		Book book = conversionService.opToObjBookId(1);
-
-		//loanDAO.save(new Loan(user, book, LocalDate.parse("2020-01-01"), false));
 
 	}
 

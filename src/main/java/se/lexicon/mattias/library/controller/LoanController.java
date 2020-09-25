@@ -21,7 +21,8 @@ public class LoanController {
     }
 
     @GetMapping("/findid/{loanId}")
-    public ResponseEntity<LoanDTO> findById(@Valid @PathVariable Long loanId) {
+    public ResponseEntity<LoanDTO> findById(@PathVariable Long loanId) {
+
         return ResponseEntity.ok(loanService.findById(loanId));
     }
 
@@ -64,5 +65,14 @@ public class LoanController {
     public ResponseEntity<LoanDTO> update(@Valid @RequestBody LoanDTO loanDTO) {
 
         return ResponseEntity.ok(loanService.update(loanDTO));
+    }
+
+    @DeleteMapping("/delete/{loanid}")
+    public ResponseEntity<Boolean> delete(@Valid @RequestBody Long loanId) {
+
+        if ( loanService.delete(loanId) ) {
+            return ResponseEntity.ok(true);
+        }
+            return ResponseEntity.ok(false);
     }
 }

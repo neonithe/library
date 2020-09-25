@@ -1,16 +1,31 @@
 package se.lexicon.mattias.library.dto;
 
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class BookDTO {
 
     private Integer bookId;
 
+    @NotBlank(message = "You need to provide a title")
     private String title;
+
+    @NotNull(message = "You need to provide a status if the book is available or not [ true or false ]")
     private boolean available;
+
+    @NotNull(message = "You need to provide a status if the book is reserved or not [ true or false ]")
     private boolean reserved;
+
+    @PositiveOrZero
+    @NotNull(message = "You need to provide a zero or positive value")
     private int maxLoanDays;
+
+    @PositiveOrZero
+    @NotNull(message = "You need to provide a zero or positive value")
     private BigDecimal finePerDay;
+
+    @NotNull(message = "You need to provide a description between 5 - 100 characters")
+    @Size(min = 5, max = 100)
     private String description;
 
     /** Constructors **/

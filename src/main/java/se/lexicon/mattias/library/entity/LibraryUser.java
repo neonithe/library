@@ -1,6 +1,7 @@
 package se.lexicon.mattias.library.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -13,10 +14,12 @@ public class LibraryUser {
     private Integer userId;
 
     private LocalDate regDate;
+
     private String name;
 
-    @Column(unique = true,name = "email")
+  //  @Column(unique = true,name = "email")
     private String email;
+
     private BigDecimal dept;
 
     /** Constructors **/

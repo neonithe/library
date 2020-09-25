@@ -1,15 +1,24 @@
 package se.lexicon.mattias.library.dto;
 
-import javax.persistence.Column;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class LibraryUserDTO {
 
     private Integer userId;
+
+    @NotNull(message = "You need to provide a date when user is registered")
     private LocalDate regDate;
+
+    @NotBlank(message = "You need to input name between 2 and 45 characters")
+    @Size(min = 2, max = 45)
     private String name;
+
+    @NotBlank
+    @Email(message = "Email should be a valid email")
     private String email;
+
     private BigDecimal dept;
 
     /** Constructors **/

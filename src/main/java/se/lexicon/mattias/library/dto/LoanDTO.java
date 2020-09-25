@@ -1,16 +1,25 @@
 package se.lexicon.mattias.library.dto;
 
-import se.lexicon.mattias.library.entity.Book;
-import se.lexicon.mattias.library.entity.LibraryUser;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
 public class LoanDTO {
 
     private Long loanId;
-    private LibraryUser loanTaker;
-    private Book book;
+
+    @NotBlank(message = "You need to provide a user to the loan")
+    private Integer userId;
+
+    @NotBlank(message = "You need to provide a book to the loan")
+    private Integer bookId;
+
+    @NotBlank(message = "You need to provide a loan date")
     private LocalDate loanDate;
+
+    @NotNull
+    @NotBlank(message = "You need to provide a status if loan is terminated or not [ true or false ]")
     private boolean avslutad;
 
     /** Constructors **/
@@ -18,17 +27,17 @@ public class LoanDTO {
     public LoanDTO() {
     }
 
-    public LoanDTO(LibraryUser loanTaker, Book book, LocalDate loanDate, boolean avslutad) {
-        this.loanTaker = loanTaker;
-        this.book = book;
+    public LoanDTO(Integer userId, Integer bookId, LocalDate loanDate, boolean avslutad) {
+        this.userId = userId;
+        this.bookId = bookId;
         this.loanDate = loanDate;
         this.avslutad = avslutad;
     }
 
-    public LoanDTO(Long loanId, LibraryUser loanTaker, Book book, LocalDate loanDate, boolean avslutad) {
+    public LoanDTO(Long loanId, Integer userId, Integer bookId, LocalDate loanDate, boolean avslutad) {
         this.loanId = loanId;
-        this.loanTaker = loanTaker;
-        this.book = book;
+        this.userId = userId;
+        this.bookId = bookId;
         this.loanDate = loanDate;
         this.avslutad = avslutad;
     }
@@ -39,20 +48,20 @@ public class LoanDTO {
         return loanId;
     }
 
-    public LibraryUser getLoanTaker() {
-        return loanTaker;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setLoanTaker(LibraryUser loanTaker) {
-        this.loanTaker = loanTaker;
+    public Integer getBookId() {
+        return bookId;
     }
 
-    public Book getBook() {
-        return book;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
     }
 
     public LocalDate getLoanDate() {
