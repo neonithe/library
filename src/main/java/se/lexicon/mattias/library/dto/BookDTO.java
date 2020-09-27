@@ -105,4 +105,17 @@ public class BookDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "BookDTO{" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", available=" + available +
+                ", reserved=" + reserved +
+                ", maxLoanDays=" + maxLoanDays +
+                ", finePerDay=" + finePerDay +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

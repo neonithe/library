@@ -66,7 +66,7 @@ public class BookServiceImpl implements BookService {
         }
 
         Book newBook =
-                new Book(book.getBookId(), book.getTitle(),book.isAvailable(),
+                new Book(book.getTitle(),book.isAvailable(),
                     book.isReserved(), book.getMaxLoanDays(), book.getFinePerDay(), book.getDescription());
 
         bookDAO.save(newBook);
